@@ -38,15 +38,16 @@ public class Main {
      * @return
      */
     public int jump1(int[] nums) {
-        int position = nums.length - 1;
+        //2,3,1,1,4
+        int length = nums.length;
+        int end = 0;
+        int maxPosition = 0;
         int steps = 0;
-        while (position > 0) {
-            for (int i = 0; i < position; i++) {
-                if (i + nums[i] >= position) {
-                    position = i;
-                    steps++;
-                    break;
-                }
+        for (int i = 0; i < length - 1; i++) {
+            maxPosition = Math.max(maxPosition, i + nums[i]);
+            if (i == end) {
+                end = maxPosition;
+                steps++;
             }
         }
         return steps;
