@@ -22,10 +22,10 @@ package com.zeki.letcode.questiontop50.question48;
  *
  * 给定 matrix =
  * [
- *   [ 5, 1, 9,11],
- *   [ 2, 4, 8,10],
- *   [13, 3, 6, 7],
- *   [15,14,12,16]
+ *   [ 5, 1, 9,11],         00 03 33 30
+ *   [ 2, 4, 8,10],         01 13 32 20
+ *   [13, 3, 6, 7],         02 23 31 10
+ *   [15,14,12,16]          11 12 21 22
  * ],
  *
  * 原地旋转输入矩阵，使其变为:
@@ -58,7 +58,7 @@ public class Main {
         }
         //镜像翻转
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n / 2; j++) {
+            for (int j = i; j < n; j++) {
                 if(i == j){
                     continue;
                 }
@@ -69,10 +69,31 @@ public class Main {
         }
     }
 
+    /**
+     * 00 03 33 30
+     * 01 13 32 20
+     * 02 23 31 10
+     * 11 12 21 22
+     * @param matrix
+     */
+    public void rotate2(int[][] matrix) {
+        int temp[] = new int[4];
+        int n = matrix.length;
+
+        for (int i = 0; i < n / 2; i++) {
+            for(int j = 0;j < n / 2;j++){
+                System.out.println(i);
+                System.out.println(j);
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+        int[][] matrix1 = new int[][]{{5, 1, 9,11},{2, 4, 8,10},{13, 3, 6, 7},{15,14,12,16}};
         Main main = new Main();
-        main.rotate(matrix);
+        main.rotate2(matrix1);
 
         System.out.println();
         for (int i = 0; i < matrix.length; i++) {
