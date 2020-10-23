@@ -1,6 +1,7 @@
 package com.zeki.letcode.questiontop50.question46;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,6 +44,21 @@ public class Main {
                 back(nums,list,res,i + 1);
                 list.remove(list.size() - 1);
             }
+        }
+    }
+
+    public void backtrack(int n, List<Integer> output, List<List<Integer>> res, int first) {
+        // 所有数都填完了
+        if (first == n) {
+            res.add(new ArrayList<Integer>(output));
+        }
+        for (int i = first; i < n; i++) {
+            // 动态维护数组
+            Collections.swap(output, first, i);
+            // 继续递归填下一个数
+            backtrack(n, output, res, first + 1);
+            // 撤销操作
+            Collections.swap(output, first, i);
         }
     }
 

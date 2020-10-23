@@ -40,7 +40,7 @@ public class Main {
     public void backAll(int begin,int n,List<String> res){
         for (int i = begin; i < n; i++) {
             for (int i1 = 0; i1 < n; i1++) {
-                
+
             }
         }
     }

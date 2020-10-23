@@ -38,7 +38,6 @@ public class Main {
         }
         //分隔数组
         char[] split = s.toCharArray();
-
         int maxLength = 0,tempLength = 0;
         String temp = "";
         //循环字符数组
