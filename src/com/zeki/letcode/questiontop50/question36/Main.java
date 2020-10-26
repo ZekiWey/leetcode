@@ -16,36 +16,66 @@ public class Main {
             for (int j = 0; j < 9; j++) {
                 if(board[i][j] != '.'){
                     //行
-                    Integer integer = rowMap.get("r" + i + board[i][j]);
+                    Integer integer = rowMap.get("" + i + board[i][j]);
                     if(integer != null){
                         return false;
                     }
-                    rowMap.put("r" + i + board[i][j], 1);
+                    rowMap.put("" + i + board[i][j], 1);
                     //方形
-                    integer = squareMap.get("s" + i/3 + "" + j/3 + board[i][j]);
+                    integer = squareMap.get("" + i/3 + "" + j/3 + board[i][j]);
                     if(integer != null){
                         return false;
                     }
-                    squareMap.put("s" + i/3 + "" + j/3 + board[i][j], 1);
+                    squareMap.put("" + i/3 + "" + j/3 + board[i][j], 1);
                 }
 
-                if(board[j][i] != '.'){
+                if(board[i][j] != '.'){
                     //列
-                    Integer integer = colMap.get("c" + j + board[j][i]);
+                    Integer integer = colMap.get("" + j + board[i][j]);
                     if(integer != null){
                         return false;
                     }
-                    colMap.put("c" + j + board[j][i], 1);
+                    colMap.put("" + j + board[i][j], 1);
                 }
 
 
             }
         }
-        System.out.println(rowMap);
-        System.out.println(colMap);
-        System.out.println(squareMap);
         return true;
     }
+
+    public boolean isValidSudoku1(char[][] board) {
+        int[][] col = new int[9][10];
+        int[][] row = new int[9][10];
+        int[][] square = new int[9][10];
+
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if(board[i][j] != '.'){
+                    //行
+                    if(row[i][board[i][j] - 48] > 0){
+                        return false;
+                    }
+                    row[i][board[i][j] - 48] = 1;
+
+                    if(col[j][board[i][j] - 48] > 0){
+                        return false;
+                    }
+                    col[j][board[i][j] - 48] = 1;
+
+                    //方形
+                    int index = (i / 3) * 3 + j / 3;
+                    if(square[index][board[i][j] - 48] > 0){
+                        return false;
+                    }
+                    square[index][board[i][j] - 48] = 1;
+                }
+            }
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
         char[][] board = new char[][]{
@@ -59,6 +89,6 @@ public class Main {
                 ,{'.','.','.','4','1','9','.','.','5'}
                 ,{'.','.','.','.','8','.','.','7','9'}};
 
-        System.out.println(new Main().isValidSudoku(board));
+        System.out.println(new Main().isValidSudoku1(board));
     }
 }
