@@ -19,54 +19,6 @@ public class Main {
         int p = 0;
         while (p < words.length){
             //选择一行的单词
-            int currLen = 0;
-            int currP = p;
-
-            while (currLen - 1 < maxWidth && currP < words.length){
-                if(currLen + words[currP].length() > maxWidth){
-                    break;
-                }
-                currLen = currLen + words[currP].length() + 1;
-                currP++;
-            }
-            //计算空格数量
-            int wordsNum = currP - p;
-            int spaceNum = (maxWidth - currLen - 1) + wordsNum - 1;
-            int ts = spaceNum;
-            System.out.println(wordsNum + "-" + spaceNum);
-            //生成一行
-            StringBuilder sb = new StringBuilder();
-            for(;p < currP;p++){
-                sb.append(words[p]);
-                //添加空格
-                int tempSpaceNum;
-                if(spaceNum == 0){
-                    tempSpaceNum = 0;
-                }else {
-                    if(spaceNum % (wordsNum - 1) == 0){
-                        tempSpaceNum = spaceNum / (wordsNum - 1);
-                    }else {
-                        spaceNum = spaceNum - spaceNum % (wordsNum - 1);
-                        tempSpaceNum = spaceNum / (wordsNum - 1) + spaceNum % (wordsNum - 1);
-                    }
-                }
-                for (int i = 0; i < tempSpaceNum; i++) {
-                    sb.append(' ');
-                }
-
-            }
-            res.add(sb.toString());
-        }
-        return res;
-    }
-
-
-
-    public List<String> fullJustify1(String[] words, int maxWidth) {
-        List<String> res = new ArrayList<>();
-        int p = 0;
-        while (p < words.length){
-            //选择一行的单词
             int currP = p;
             int currLen = 0;
             int wordNum = 0;
@@ -90,14 +42,24 @@ public class Main {
                 sb.append(words[p]);
                 //添加空格
                 if(currP >= words.length){
-                    sb.append(' ');
+                    //最后一行左对齐
+                    if(p < currP - 1){
+                        sb.append(' ');
+                    }else {
+                        //最后一个单词补齐右边空格
+                        int num = maxWidth - sb.length();
+                        for (int i = 0; i < num; i++) {
+                            sb.append(' ');
+                        }
+                    }
                 }else {
                     if(intervalNum > 0){
                         int tempSpaceNum;
                         if(spaceNumSum % intervalNum == 0){
                             tempSpaceNum = spaceNumSum / intervalNum;
                         }else {
-                            tempSpaceNum = spaceNumSum / intervalNum + spaceNumSum % intervalNum;
+                            //采用四舍五入原则
+                            tempSpaceNum = spaceNumSum / intervalNum + 1;
                         }
                         for (int i = 0; i < tempSpaceNum; i++) {
                             sb.append(' ');
@@ -107,13 +69,6 @@ public class Main {
                     }
                 }
             }
-            if(currP >= words.length){
-                //最后一行补齐空格
-                int num = maxWidth - sb.length();
-                for (int i = 0; i < num; i++) {
-                    sb.append(' ');
-                }
-            }
             res.add(sb.toString());
 
         }
@@ -121,11 +76,10 @@ public class Main {
     }
 
 
-
     public static void main(String[] args) {
         Main main = new Main();
-        String[] words = new String[]{"What","must","be","acknowledgment","shall","be"};
-        List<String> list = main.fullJustify1(words, 16);
+        String[] words = new String[]{"Science","is","what","we","understand","well","enough","to","explain","to","a","computer.","Art","is","everything","else","we","do"};
+        List<String> list = main.fullJustify(words, 20);
         for (String s : list) {
             System.out.println(s);
         }
