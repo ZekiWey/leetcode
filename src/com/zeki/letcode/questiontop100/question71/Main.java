@@ -1,5 +1,7 @@
 package com.zeki.letcode.questiontop100.question71;
 
+import java.util.Stack;
+
 /**
  * 以 Unix 风格给出一个文件的绝对路径，你需要简化它。或者换句话说，将其转换为规范路径。
  * 在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；
@@ -26,13 +28,36 @@ public class Main {
      * @return
      */
     public String simplifyPath(String path) {
-        for (int i = 0; i < path.length(); i++) {
-            //if(path.charAt())
+        //拆分字符串
+        String[] split = path.split("/");
+        Stack<String> stack = new Stack<>();
+        for (String s : split) {
+            if(s.trim().equals("")){
+                continue;
+            }
+            if(s.equals("..")){
+                if(!stack.empty()){
+                    stack.pop();
+                }
+            } else if(s.equals(".")){
+                //nothing
+            } else {
+                stack.push(s);
+            }
         }
-        return null;
+        StringBuilder sb = new StringBuilder();
+        if(stack.empty()){
+            sb.append('/');
+        }else {
+            for (Object o : stack.toArray()) {
+                sb.append('/').append(o.toString());
+            }
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args) {
-
+        Main main = new Main();
+        System.out.println(main.simplifyPath("/../"));
     }
 }
